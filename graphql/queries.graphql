@@ -38,9 +38,9 @@ query ListUBEvents(
     nextToken
   }
 }
-query GetUBUser($userId: String!) {
-  getUBUser(userId: $userId) {
-    userId
+query GetUBUser($id: String!) {
+  getUBUser(id: $id) {
+    id
     email
     displayName
     firstName
@@ -49,10 +49,9 @@ query GetUBUser($userId: String!) {
     apnsToken
     friends {
       items {
-        userId
+        id
         friendId
         groups
-        id
         createdAt
         updatedAt
       }
@@ -63,21 +62,21 @@ query GetUBUser($userId: String!) {
   }
 }
 query ListUBUsers(
-  $userId: String
+  $id: String
   $filter: ModelUBUserFilterInput
   $limit: Int
   $nextToken: String
   $sortDirection: ModelSortDirection
 ) {
   listUBUsers(
-    userId: $userId
+    id: $id
     filter: $filter
     limit: $limit
     nextToken: $nextToken
     sortDirection: $sortDirection
   ) {
     items {
-      userId
+      id
       email
       displayName
       firstName
@@ -95,10 +94,9 @@ query ListUBUsers(
 }
 query GetUBFriends($id: ID!) {
   getUBFriends(id: $id) {
-    userId
+    id
     friendId
     groups
-    id
     createdAt
     updatedAt
   }
@@ -110,10 +108,9 @@ query ListUBFriends(
 ) {
   listUBFriends(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      userId
+      id
       friendId
       groups
-      id
       createdAt
       updatedAt
     }

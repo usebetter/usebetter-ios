@@ -4,7 +4,6 @@ import Foundation
 
 public struct UBUser: Model {
   public let id: String
-  public var userId: String
   public var email: String
   public var displayName: String?
   public var firstName: String?
@@ -16,7 +15,6 @@ public struct UBUser: Model {
   public var updatedAt: Temporal.DateTime?
   
   public init(id: String = UUID().uuidString,
-      userId: String,
       email: String,
       displayName: String? = nil,
       firstName: String? = nil,
@@ -25,7 +23,6 @@ public struct UBUser: Model {
       apnsToken: String? = nil,
       friends: List<UBFriends>? = []) {
     self.init(id: id,
-      userId: userId,
       email: email,
       displayName: displayName,
       firstName: firstName,
@@ -37,7 +34,6 @@ public struct UBUser: Model {
       updatedAt: nil)
   }
   internal init(id: String = UUID().uuidString,
-      userId: String,
       email: String,
       displayName: String? = nil,
       firstName: String? = nil,
@@ -48,7 +44,6 @@ public struct UBUser: Model {
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id
-      self.userId = userId
       self.email = email
       self.displayName = displayName
       self.firstName = firstName

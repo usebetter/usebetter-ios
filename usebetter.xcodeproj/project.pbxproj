@@ -1128,7 +1128,7 @@
 			repositoryURL = "https://github.com/aws-amplify/amplify-swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.1;
+				minimumVersion = 2.4.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

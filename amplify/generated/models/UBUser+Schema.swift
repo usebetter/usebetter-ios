@@ -6,7 +6,6 @@ extension UBUser {
   // MARK: - CodingKeys 
    public enum CodingKeys: String, ModelKey {
     case id
-    case userId
     case email
     case displayName
     case firstName
@@ -32,19 +31,18 @@ extension UBUser {
     model.pluralName = "UBUsers"
     
     model.attributes(
-      .index(fields: ["userId"], name: nil)
+      .index(fields: ["id"], name: nil)
     )
     
     model.fields(
-      .id(),
-      .field(uBUser.userId, is: .required, ofType: .string),
+      .field(uBUser.id, is: .required, ofType: .string),
       .field(uBUser.email, is: .required, ofType: .string),
       .field(uBUser.displayName, is: .optional, ofType: .string),
       .field(uBUser.firstName, is: .optional, ofType: .string),
       .field(uBUser.lastName, is: .optional, ofType: .string),
       .field(uBUser.fcmToken, is: .optional, ofType: .string),
       .field(uBUser.apnsToken, is: .optional, ofType: .string),
-      .hasMany(uBUser.friends, is: .optional, ofType: UBFriends.self, associatedWith: UBFriends.keys.userId),
+      .hasMany(uBUser.friends, is: .optional, ofType: UBFriends.self, associatedWith: UBFriends.keys.id),
       .field(uBUser.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(uBUser.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

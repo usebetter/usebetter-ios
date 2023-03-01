@@ -10,7 +10,7 @@ import Combine
 
 class AppUserDefaults {
     static let shared = AppUserDefaults()
-    var userAttributeChanged: CurrentValueSubject<Bool, Never> = .init(false)
+    let userAttributeChanged = PassthroughSubject<Bool, Never>()
     private struct Constants {
         static let firstName = "firstName"
         static let lastName = "lastName"
@@ -27,14 +27,10 @@ class AppUserDefaults {
     private func set(attributeName: String, _ newValue: String ) {
         let userDefaults = UserDefaults.standard
         let storedValue = userDefaults.string(forKey: attributeName)
-        //if storedValue == nil , newValue != storedValue {
             userDefaults.set(newValue, forKey: attributeName)
             logger.log("[AppUserDefaults] set \(attributeName) changed or nil. storing in user defaults \(newValue)")
             userAttributeChanged.send(true)
-        //}
-        //else {
             logger.log("[AppUserDefaults] set stored \(attributeName) value is: \(storedValue ?? "")")
-        //}
     }
     
     private func get(attributeName: String) -> String? {

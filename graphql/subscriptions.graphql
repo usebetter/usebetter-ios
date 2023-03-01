@@ -34,7 +34,7 @@ subscription OnDeleteUBEvent($filter: ModelSubscriptionUBEventFilterInput) {
 }
 subscription OnCreateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
   onCreateUBUser(filter: $filter) {
-    userId
+    id
     email
     displayName
     firstName
@@ -43,10 +43,9 @@ subscription OnCreateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
     apnsToken
     friends {
       items {
-        userId
+        id
         friendId
         groups
-        id
         createdAt
         updatedAt
       }
@@ -58,7 +57,7 @@ subscription OnCreateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
 }
 subscription OnUpdateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
   onUpdateUBUser(filter: $filter) {
-    userId
+    id
     email
     displayName
     firstName
@@ -67,10 +66,9 @@ subscription OnUpdateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
     apnsToken
     friends {
       items {
-        userId
+        id
         friendId
         groups
-        id
         createdAt
         updatedAt
       }
@@ -82,7 +80,7 @@ subscription OnUpdateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
 }
 subscription OnDeleteUBUser($filter: ModelSubscriptionUBUserFilterInput) {
   onDeleteUBUser(filter: $filter) {
-    userId
+    id
     email
     displayName
     firstName
@@ -91,10 +89,9 @@ subscription OnDeleteUBUser($filter: ModelSubscriptionUBUserFilterInput) {
     apnsToken
     friends {
       items {
-        userId
+        id
         friendId
         groups
-        id
         createdAt
         updatedAt
       }
@@ -106,30 +103,27 @@ subscription OnDeleteUBUser($filter: ModelSubscriptionUBUserFilterInput) {
 }
 subscription OnCreateUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
   onCreateUBFriends(filter: $filter) {
-    userId
+    id
     friendId
     groups
-    id
     createdAt
     updatedAt
   }
 }
 subscription OnUpdateUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
   onUpdateUBFriends(filter: $filter) {
-    userId
+    id
     friendId
     groups
-    id
     createdAt
     updatedAt
   }
 }
 subscription OnDeleteUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
   onDeleteUBFriends(filter: $filter) {
-    userId
+    id
     friendId
     groups
-    id
     createdAt
     updatedAt
   }
