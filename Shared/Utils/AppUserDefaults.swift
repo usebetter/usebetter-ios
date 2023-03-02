@@ -27,10 +27,13 @@ class AppUserDefaults {
     private func set(attributeName: String, _ newValue: String ) {
         let userDefaults = UserDefaults.standard
         let storedValue = userDefaults.string(forKey: attributeName)
+        
+        if storedValue != newValue {
             userDefaults.set(newValue, forKey: attributeName)
             logger.log("[AppUserDefaults] set \(attributeName) changed or nil. storing in user defaults \(newValue)")
             userAttributeChanged.send(true)
-            logger.log("[AppUserDefaults] set stored \(attributeName) value is: \(storedValue ?? "")")
+        }
+        logger.log("[AppUserDefaults] set stored \(attributeName) value is: \(storedValue ?? "")")
     }
     
     private func get(attributeName: String) -> String? {

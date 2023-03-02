@@ -54,21 +54,31 @@ class UserInfoModel: ObservableObject {
         }
     }
     
+    private func getUBUserQuery(currentUser: String) -> GraphQLRequest<UBUser> {
+        let documentString = "query GetUBUser($userId: String!) {\n  getUBUser(userId: $userId) {\n    userId\n    apnsToken\n    createdAt\n    displayName\n    email\n    fcmToken\n    firstName\n    id\n    lastName\n    updatedAt\n    __typename\n  }\n}"
+        
+        let documentVariables: [String: Any] = ["userId": currentUser]
+        let documentName = "getUBUser"
+        return GraphQLRequest<UBUser>(document: documentString,
+                                  variables: documentVariables,
+                                  responseType: UBUser.self,
+                                  decodePath: documentName)
+    }
     private func updateUserInfo() async {
         guard let currentUser = AccountManager.sharedInstance.currentUsername else {
             return
         }
         do {
             
-            let getResult = try await Amplify.API.query(request:.get(UBUser.self, byId: currentUser))
+            let getResult = try await Amplify.API.query(request: getUBUserQuery(currentUser: currentUser))
             switch getResult {
             case .success(let userRecord):
-                if userRecord == nil {
-                    logger.log("UserInfoModel: updateUserInfo: creating new record")
-                    await createOrUpdateRecord(create: true)
-                    return
-                }
-                logger.log("UserInfoModel: updateUserInfo: updating existing record")
+//                if userRecord == nil {
+//                    logger.log("UserInfoModel: updateUserInfo: creating new record")
+//                    await createOrUpdateRecord(create: true)
+//                    return
+//                }
+                logger.log("UserInfoModel: updateUserInfo: updating existing record \(String(describing: userRecord))")
                 await createOrUpdateRecord(create: false)
                 
             case .failure(let error):
