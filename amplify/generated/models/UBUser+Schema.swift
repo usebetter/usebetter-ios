@@ -44,7 +44,7 @@ extension UBUser {
       .field(uBUser.lastName, is: .optional, ofType: .string),
       .field(uBUser.fcmToken, is: .optional, ofType: .string),
       .field(uBUser.apnsToken, is: .optional, ofType: .string),
-      .hasMany(uBUser.friends, is: .optional, ofType: UBFriends.self, associatedWith: UBFriends.keys.uBUserFriendsId),
+      .hasMany(uBUser.friends, is: .optional, ofType: UBFriendsMap.self, associatedWith: UBFriendsMap.keys.uBUserFriendsId),
       .field(uBUser.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(uBUser.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

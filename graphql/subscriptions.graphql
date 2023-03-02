@@ -110,8 +110,10 @@ subscription OnDeleteUBUser($filter: ModelSubscriptionUBUserFilterInput) {
     updatedAt
   }
 }
-subscription OnCreateUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
-  onCreateUBFriends(filter: $filter) {
+subscription OnCreateUBFriendsMap(
+  $filter: ModelSubscriptionUBFriendsMapFilterInput
+) {
+  onCreateUBFriendsMap(filter: $filter) {
     id
     userId
     friendId
@@ -121,8 +123,10 @@ subscription OnCreateUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
     uBUserFriendsId
   }
 }
-subscription OnUpdateUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
-  onUpdateUBFriends(filter: $filter) {
+subscription OnUpdateUBFriendsMap(
+  $filter: ModelSubscriptionUBFriendsMapFilterInput
+) {
+  onUpdateUBFriendsMap(filter: $filter) {
     id
     userId
     friendId
@@ -132,8 +136,10 @@ subscription OnUpdateUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
     uBUserFriendsId
   }
 }
-subscription OnDeleteUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
-  onDeleteUBFriends(filter: $filter) {
+subscription OnDeleteUBFriendsMap(
+  $filter: ModelSubscriptionUBFriendsMapFilterInput
+) {
+  onDeleteUBFriendsMap(filter: $filter) {
     id
     userId
     friendId

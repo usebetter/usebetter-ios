@@ -29,18 +29,18 @@ firstName: String
 lastName: String
 fcmToken: String
 apnsToken: String
-friends: [UBFriends] @hasMany
+friends: [UBFriendsMap] @hasMany
 }
 
 
-type UBFriends @model
+type UBFriendsMap @model
     @auth(rules: [
     { allow: private },
     { allow: groups, groups: ["Admins"] }
     ])
 {
-  id: String! @index(name: "byUserIdAndFriendId", sortKeyFields: ["friendId"])
-  userId: String!
+  id: ID!
+  userId: String! @primaryKey(sortKeyFields: ["friendId"])
   friendId: String!
   circleName: [String]
 }

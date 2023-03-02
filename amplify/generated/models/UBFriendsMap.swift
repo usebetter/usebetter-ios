@@ -2,7 +2,7 @@
 import Amplify
 import Foundation
 
-public struct UBFriends: Model {
+public struct UBFriendsMap: Model {
   public let id: String
   public var userId: String
   public var friendId: String

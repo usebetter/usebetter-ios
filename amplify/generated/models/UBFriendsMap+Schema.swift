@@ -2,7 +2,7 @@
 import Amplify
 import Foundation
 
-extension UBFriends {
+extension UBFriendsMap {
   // MARK: - CodingKeys 
    public enum CodingKeys: String, ModelKey {
     case id
@@ -18,27 +18,27 @@ extension UBFriends {
   //  MARK: - ModelSchema 
   
   public static let schema = defineSchema { model in
-    let uBFriends = UBFriends.keys
+    let uBFriendsMap = UBFriendsMap.keys
     
     model.authRules = [
       rule(allow: .private, operations: [.create, .update, .delete, .read]),
       rule(allow: .groups, groupClaim: "cognito:groups", groups: ["Admins"], provider: .userPools, operations: [.create, .update, .delete, .read])
     ]
     
-    model.pluralName = "UBFriends"
+    model.pluralName = "UBFriendsMaps"
     
     model.attributes(
-      .index(fields: ["id", "friendId"], name: "byUserIdAndFriendId")
+      .index(fields: ["userId", "friendId"], name: nil)
     )
     
     model.fields(
-      .field(uBFriends.id, is: .required, ofType: .string),
-      .field(uBFriends.userId, is: .required, ofType: .string),
-      .field(uBFriends.friendId, is: .required, ofType: .string),
-      .field(uBFriends.circleName, is: .optional, ofType: .embeddedCollection(of: String.self)),
-      .field(uBFriends.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
-      .field(uBFriends.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime),
-      .field(uBFriends.uBUserFriendsId, is: .optional, ofType: .string)
+      .id(),
+      .field(uBFriendsMap.userId, is: .required, ofType: .string),
+      .field(uBFriendsMap.friendId, is: .required, ofType: .string),
+      .field(uBFriendsMap.circleName, is: .optional, ofType: .embeddedCollection(of: String.self)),
+      .field(uBFriendsMap.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
+      .field(uBFriendsMap.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime),
+      .field(uBFriendsMap.uBUserFriendsId, is: .optional, ofType: .string)
     )
     }
 }

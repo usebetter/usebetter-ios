@@ -11,7 +11,7 @@ public struct UBUser: Model {
   public var lastName: String?
   public var fcmToken: String?
   public var apnsToken: String?
-  public var friends: List<UBFriends>?
+  public var friends: List<UBFriendsMap>?
   public var createdAt: Temporal.DateTime?
   public var updatedAt: Temporal.DateTime?
   
@@ -23,7 +23,7 @@ public struct UBUser: Model {
       lastName: String? = nil,
       fcmToken: String? = nil,
       apnsToken: String? = nil,
-      friends: List<UBFriends>? = []) {
+      friends: List<UBFriendsMap>? = []) {
     self.init(id: id,
       userId: userId,
       email: email,
@@ -44,7 +44,7 @@ public struct UBUser: Model {
       lastName: String? = nil,
       fcmToken: String? = nil,
       apnsToken: String? = nil,
-      friends: List<UBFriends>? = [],
+      friends: List<UBFriendsMap>? = [],
       createdAt: Temporal.DateTime? = nil,
       updatedAt: Temporal.DateTime? = nil) {
       self.id = id

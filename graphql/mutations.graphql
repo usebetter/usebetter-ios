@@ -128,11 +128,11 @@ mutation DeleteUBUser(
     updatedAt
   }
 }
-mutation CreateUBFriends(
-  $input: CreateUBFriendsInput!
-  $condition: ModelUBFriendsConditionInput
+mutation CreateUBFriendsMap(
+  $input: CreateUBFriendsMapInput!
+  $condition: ModelUBFriendsMapConditionInput
 ) {
-  createUBFriends(input: $input, condition: $condition) {
+  createUBFriendsMap(input: $input, condition: $condition) {
     id
     userId
     friendId
@@ -142,11 +142,11 @@ mutation CreateUBFriends(
     uBUserFriendsId
   }
 }
-mutation UpdateUBFriends(
-  $input: UpdateUBFriendsInput!
-  $condition: ModelUBFriendsConditionInput
+mutation UpdateUBFriendsMap(
+  $input: UpdateUBFriendsMapInput!
+  $condition: ModelUBFriendsMapConditionInput
 ) {
-  updateUBFriends(input: $input, condition: $condition) {
+  updateUBFriendsMap(input: $input, condition: $condition) {
     id
     userId
     friendId
@@ -156,11 +156,11 @@ mutation UpdateUBFriends(
     uBUserFriendsId
   }
 }
-mutation DeleteUBFriends(
-  $input: DeleteUBFriendsInput!
-  $condition: ModelUBFriendsConditionInput
+mutation DeleteUBFriendsMap(
+  $input: DeleteUBFriendsMapInput!
+  $condition: ModelUBFriendsMapConditionInput
 ) {
-  deleteUBFriends(input: $input, condition: $condition) {
+  deleteUBFriendsMap(input: $input, condition: $condition) {
     id
     userId
     friendId

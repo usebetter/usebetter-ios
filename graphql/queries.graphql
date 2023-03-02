@@ -96,8 +96,8 @@ query ListUBUsers(
     nextToken
   }
 }
-query GetUBFriends($id: ID!) {
-  getUBFriends(id: $id) {
+query GetUBFriendsMap($userId: String!, $friendId: String!) {
+  getUBFriendsMap(userId: $userId, friendId: $friendId) {
     id
     userId
     friendId
@@ -107,12 +107,22 @@ query GetUBFriends($id: ID!) {
     uBUserFriendsId
   }
 }
-query ListUBFriends(
-  $filter: ModelUBFriendsFilterInput
+query ListUBFriendsMaps(
+  $userId: String
+  $friendId: ModelStringKeyConditionInput
+  $filter: ModelUBFriendsMapFilterInput
   $limit: Int
   $nextToken: String
+  $sortDirection: ModelSortDirection
 ) {
-  listUBFriends(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listUBFriendsMaps(
+    userId: $userId
+    friendId: $friendId
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
     items {
       id
       userId
