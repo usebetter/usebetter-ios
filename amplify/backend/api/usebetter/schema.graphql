@@ -21,14 +21,15 @@ type UBUser @model
     { allow: groups, groups: ["Admins"] }
     ])
 {
-id: String! @primaryKey
+id: ID!
+userId: String! @primaryKey
 email: String!
 displayName: String
 firstName: String
 lastName: String
 fcmToken: String
 apnsToken: String
-friends: [UBFriends] @hasMany(indexName: "byUserIdAndFriendId", fields: ["id"])
+friends: [UBFriends] @hasMany
 }
 
 
@@ -40,5 +41,5 @@ type UBFriends @model
 {
   id: String! @index(name: "byUserIdAndFriendId", sortKeyFields: ["friendId"])
   friendId: String!
-  groups: [String]
+  circleName: [String]
 }
