@@ -17,7 +17,6 @@ class UserInfoModel: ObservableObject {
     private var bag = Set<AnyCancellable>()
     private var updateOnce = false
     private var updateTimer: Timer? = nil
-    private var dynamoDBClient = DynamoDBClient(region: "us-east-1")
     
     public init() {
         registerForEvents()
@@ -91,7 +90,7 @@ class UserInfoModel: ObservableObject {
         }
         logger.log("UserInfoModel: createOrUpdateRecord: \(create ? "creating" : "updating") record")
         
-        var updatedUser = UBUser(id: currentUser, email: emailId)
+        var updatedUser = UBUser(userId: currentUser, email: emailId)
         updatedUser.displayName = AppUserDefaults.shared.displayName
         updatedUser.firstName = AppUserDefaults.shared.firstName
         updatedUser.lastName = AppUserDefaults.shared.lastName

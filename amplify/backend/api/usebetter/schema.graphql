@@ -40,7 +40,7 @@ type UBFriends @model
     ])
 {
   id: String! @index(name: "byUserIdAndFriendId", sortKeyFields: ["friendId"])
-  userId: String! @primaryKey(sortKeyFields: ["friendId"])
+  userId: String!
   friendId: String!
   circleName: [String]
 }
