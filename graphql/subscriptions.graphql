@@ -35,6 +35,7 @@ subscription OnDeleteUBEvent($filter: ModelSubscriptionUBEventFilterInput) {
 subscription OnCreateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
   onCreateUBUser(filter: $filter) {
     id
+    userId
     email
     displayName
     firstName
@@ -44,10 +45,12 @@ subscription OnCreateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
     friends {
       items {
         id
+        userId
         friendId
-        groups
+        circleName
         createdAt
         updatedAt
+        uBUserFriendsId
       }
       nextToken
     }
@@ -58,6 +61,7 @@ subscription OnCreateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
 subscription OnUpdateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
   onUpdateUBUser(filter: $filter) {
     id
+    userId
     email
     displayName
     firstName
@@ -67,10 +71,12 @@ subscription OnUpdateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
     friends {
       items {
         id
+        userId
         friendId
-        groups
+        circleName
         createdAt
         updatedAt
+        uBUserFriendsId
       }
       nextToken
     }
@@ -81,6 +87,7 @@ subscription OnUpdateUBUser($filter: ModelSubscriptionUBUserFilterInput) {
 subscription OnDeleteUBUser($filter: ModelSubscriptionUBUserFilterInput) {
   onDeleteUBUser(filter: $filter) {
     id
+    userId
     email
     displayName
     firstName
@@ -90,10 +97,12 @@ subscription OnDeleteUBUser($filter: ModelSubscriptionUBUserFilterInput) {
     friends {
       items {
         id
+        userId
         friendId
-        groups
+        circleName
         createdAt
         updatedAt
+        uBUserFriendsId
       }
       nextToken
     }
@@ -104,27 +113,33 @@ subscription OnDeleteUBUser($filter: ModelSubscriptionUBUserFilterInput) {
 subscription OnCreateUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
   onCreateUBFriends(filter: $filter) {
     id
+    userId
     friendId
-    groups
+    circleName
     createdAt
     updatedAt
+    uBUserFriendsId
   }
 }
 subscription OnUpdateUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
   onUpdateUBFriends(filter: $filter) {
     id
+    userId
     friendId
-    groups
+    circleName
     createdAt
     updatedAt
+    uBUserFriendsId
   }
 }
 subscription OnDeleteUBFriends($filter: ModelSubscriptionUBFriendsFilterInput) {
   onDeleteUBFriends(filter: $filter) {
     id
+    userId
     friendId
-    groups
+    circleName
     createdAt
     updatedAt
+    uBUserFriendsId
   }
 }

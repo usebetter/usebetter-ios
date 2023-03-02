@@ -47,6 +47,7 @@ mutation CreateUBUser(
 ) {
   createUBUser(input: $input, condition: $condition) {
     id
+    userId
     email
     displayName
     firstName
@@ -56,10 +57,12 @@ mutation CreateUBUser(
     friends {
       items {
         id
+        userId
         friendId
-        groups
+        circleName
         createdAt
         updatedAt
+        uBUserFriendsId
       }
       nextToken
     }
@@ -73,6 +76,7 @@ mutation UpdateUBUser(
 ) {
   updateUBUser(input: $input, condition: $condition) {
     id
+    userId
     email
     displayName
     firstName
@@ -82,10 +86,12 @@ mutation UpdateUBUser(
     friends {
       items {
         id
+        userId
         friendId
-        groups
+        circleName
         createdAt
         updatedAt
+        uBUserFriendsId
       }
       nextToken
     }
@@ -99,6 +105,7 @@ mutation DeleteUBUser(
 ) {
   deleteUBUser(input: $input, condition: $condition) {
     id
+    userId
     email
     displayName
     firstName
@@ -108,10 +115,12 @@ mutation DeleteUBUser(
     friends {
       items {
         id
+        userId
         friendId
-        groups
+        circleName
         createdAt
         updatedAt
+        uBUserFriendsId
       }
       nextToken
     }
@@ -125,10 +134,12 @@ mutation CreateUBFriends(
 ) {
   createUBFriends(input: $input, condition: $condition) {
     id
+    userId
     friendId
-    groups
+    circleName
     createdAt
     updatedAt
+    uBUserFriendsId
   }
 }
 mutation UpdateUBFriends(
@@ -137,10 +148,12 @@ mutation UpdateUBFriends(
 ) {
   updateUBFriends(input: $input, condition: $condition) {
     id
+    userId
     friendId
-    groups
+    circleName
     createdAt
     updatedAt
+    uBUserFriendsId
   }
 }
 mutation DeleteUBFriends(
@@ -149,9 +162,11 @@ mutation DeleteUBFriends(
 ) {
   deleteUBFriends(input: $input, condition: $condition) {
     id
+    userId
     friendId
-    groups
+    circleName
     createdAt
     updatedAt
+    uBUserFriendsId
   }
 }
