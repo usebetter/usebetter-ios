@@ -48,6 +48,7 @@ class UserInfoModel: ObservableObject {
             }
             self.updateTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { _ in
                 Task {
+                    logger.log("UserInfoModel: scheduleUpdate: updating user info with new data")
                     await self.updateUserInfo()
                 }
             }

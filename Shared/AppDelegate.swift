@@ -44,7 +44,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
             }
           }
         
-        application.registerForRemoteNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
         
         return true
     }
@@ -55,14 +55,21 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
                 return
             }
             logger.log("[AppDelegate] messaging:didReceiveRegistrationToken token is \(token)")
-            AppUserDefaults.shared.fcmToken = token
+            #if !targetEnvironment(simulator)
+                AppUserDefaults.shared.fcmToken = token
+                logger.log("[AppDelegate] messaging storing FCM token only for real devive")
+            #else
+                logger.log("[AppDelegate] messaging skipping FCM token storing for simulators")
+            #endif
+            
         }
     }
     
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let stringToken = String(decoding: deviceToken, as: UTF8.self)
-        logger.log("[AppDelegate] messaging:didRegisterForRemoteNotificationsWithDeviceToken APNS device Token is: \(stringToken)")
+        let stringToken = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        
+        logger.log("[AppDelegate] didRegisterForRemoteNotificationsWithDeviceToken APNS device Token is: \(stringToken)")
         Messaging.messaging().apnsToken = deviceToken
         AppUserDefaults.shared.apnsToken = stringToken
     }
