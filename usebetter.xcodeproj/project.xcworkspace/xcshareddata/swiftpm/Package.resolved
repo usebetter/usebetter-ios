@@ -55,6 +55,15 @@
       }
     },
     {
+      "identity" : "base62",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/marcelvoss/Base62.git",
+      "state" : {
+        "revision" : "aed06b7833864df9ef7b42a7fc167e7f46b90fac",
+        "version" : "0.1.0"
+      }
+    },
+    {
       "identity" : "boringssl-swiftpm",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/boringssl-SwiftPM.git",

@@ -18,6 +18,7 @@ class AppUserDefaults {
         static let displayName = "displayName"
         static let fcmToken = "fcmToken"
         static let apnsToken = "apnsToken"
+        static let friendsList = "friendsList"
         
     }
     
@@ -36,9 +37,23 @@ class AppUserDefaults {
         logger.log("[AppUserDefaults] set stored \(attributeName) value is: \(storedValue ?? "")")
     }
     
+    private func setDict(attributeName: String, _ newValue: [String: String] ) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(newValue, forKey: attributeName)
+        logger.log("[AppUserDefaults] setDict stored \(attributeName)")
+    }
+    
     private func get(attributeName: String) -> String? {
         let userDefaults = UserDefaults.standard
         return userDefaults.string(forKey: attributeName)
+    }
+    
+    private func getDict(attributeName: String) -> [String: String] {
+        let userDefaults = UserDefaults.standard
+        guard let dict = userDefaults.object(forKey: attributeName) as? Dictionary<String, String> else {
+            return [:]
+        }
+        return dict
     }
     
     var firstName: String? {
@@ -91,6 +106,15 @@ class AppUserDefaults {
         }
         set {
             set(attributeName: Constants.apnsToken, newValue ?? "")
+        }
+    }
+    
+    var friendsList: [String: String] {
+        get {
+            return getDict(attributeName: Constants.friendsList)
+        }
+        set {
+            setDict(attributeName: Constants.friendsList, newValue)
         }
     }
 }

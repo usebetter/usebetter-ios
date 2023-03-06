@@ -8,8 +8,6 @@
 import Foundation
 import Amplify
 import Combine
-import AWSClientRuntime
-import ClientRuntime
 
 
 class UserInfoModel: ObservableObject {
@@ -65,6 +63,7 @@ class UserInfoModel: ObservableObject {
                                   responseType: UBUser.self,
                                   decodePath: documentName)
     }
+    
     private func updateUserInfo() async {
         guard let currentUser = AccountManager.sharedInstance.currentUsername else {
             return
@@ -74,14 +73,8 @@ class UserInfoModel: ObservableObject {
             let getResult = try await Amplify.API.query(request: getUBUserQuery(currentUser: currentUser))
             switch getResult {
             case .success(let userRecord):
-//                if userRecord == nil {
-//                    logger.log("UserInfoModel: updateUserInfo: creating new record")
-//                    await createOrUpdateRecord(create: true)
-//                    return
-//                }
                 logger.log("UserInfoModel: updateUserInfo: updating existing record \(String(describing: userRecord))")
-                await createOrUpdateRecord(create: false)
-                
+                await createOrUpdateRecord(create: false)                
             case .failure(let error):
                 logger.log("UserInfoModel: updateUserInfo: failed to get records from table error: \(error)")
                 await createOrUpdateRecord(create: true)

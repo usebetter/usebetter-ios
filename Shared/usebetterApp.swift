@@ -17,6 +17,7 @@ struct usebetterApp: App {
     @StateObject var eventsModel = EventsModel()
     @StateObject var notificationCenterDelegate = UBNotificationCenterDelegate()
     @StateObject var userInfoModel = UserInfoModel()
+    @StateObject var friendsModel = FriendsModel()
     
     var body: some Scene {
         WindowGroup {
@@ -27,6 +28,7 @@ struct usebetterApp: App {
                 .environmentObject(eventsModel)
                 .environmentObject(notificationCenterDelegate)
                 .environmentObject(userInfoModel)
+                .environmentObject(friendsModel)
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }

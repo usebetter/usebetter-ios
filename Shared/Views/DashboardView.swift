@@ -20,6 +20,7 @@ struct DashboardView: View {
     @EnvironmentObject var userFeedData: UserFeedModel
     @EnvironmentObject var friendsFeedData: FriendsFeedModel
     @EnvironmentObject var eventsModel: EventsModel
+    @EnvironmentObject var friendsModel: FriendsModel
     var body: some View {
         TabView {
             DashboardHomeView(searchText: "")
@@ -38,6 +39,7 @@ struct DashboardView: View {
                     Label("Events", systemImage: "person.3.sequence.fill")
                 }
             DashboardSettingsView()
+                .environmentObject(friendsModel)
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
