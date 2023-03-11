@@ -83,8 +83,65 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
       }
 
       // Handle other custom URL types.
+        // Determine who sent the URL.
+        let sendingAppID = options[.sourceApplication]
+        print("source application = \(sendingAppID ?? "Unknown")")
 
-      // If not handled by this app, return false.
-      return false
+        // Process the URL.
+        guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
+            let albumPath = components.path,
+            let params = components.queryItems else {
+                print("Invalid URL or album path missing")
+                return false
+        }
+
+        if let photoIndex = params.first(where: { $0.name == "index" })?.value {
+            print("albumPath = \(albumPath)")
+            print("photoIndex = \(photoIndex)")
+            return true
+        } else {
+            print("Photo index missing")
+            return false
+        }
+    }
+    
+    func application(_ application: UIApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
+    {
+        logger.log("application universal link launched app")
+        // Get URL components from the incoming user activity.
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+            let incomingURL = userActivity.webpageURL,
+            let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
+            return false
+        }
+
+        // Check for specific URL components that you need.
+        guard let path = components.path,
+        let params = components.queryItems else {
+            return false
+        }
+        logger.log("path = \(path)")
+
+        if let friends = params.first(where: { $0.name == "friends" } )?.value{
+
+            logger.log("album = \(friends)")
+            return true
+
+        } else {
+            logger.log("Either album name or photo index missing")
+            return false
+        }
+    }
+    
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+        sceneConfig.delegateClass = UBSceneDelegate.self
+        return sceneConfig
     }
 }

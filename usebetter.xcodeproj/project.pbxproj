@@ -113,6 +113,10 @@
 		C0E4ED3E28488856002C29AA /* DashboardEventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E4ED3C28488856002C29AA /* DashboardEventsViewModel.swift */; };
 		C0E4ED40284C28F3002C29AA /* WebContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E4ED3F284C28F3002C29AA /* WebContentView.swift */; };
 		C0E4ED41284C28F3002C29AA /* WebContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E4ED3F284C28F3002C29AA /* WebContentView.swift */; };
+		C0E5483929B852D1002EE6FD /* UBSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E5483829B852D1002EE6FD /* UBSceneDelegate.swift */; };
+		C0E5483A29B852D1002EE6FD /* UBSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E5483829B852D1002EE6FD /* UBSceneDelegate.swift */; };
+		C0E5483D29BC368C002EE6FD /* UBNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E5483C29BC368C002EE6FD /* UBNotifications.swift */; };
+		C0E5483E29BC368C002EE6FD /* UBNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E5483C29BC368C002EE6FD /* UBNotifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,6 +200,8 @@
 		C0E4ED392845D614002C29AA /* ActionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionItemView.swift; sourceTree = "<group>"; };
 		C0E4ED3C28488856002C29AA /* DashboardEventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardEventsViewModel.swift; sourceTree = "<group>"; };
 		C0E4ED3F284C28F3002C29AA /* WebContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContentView.swift; sourceTree = "<group>"; };
+		C0E5483829B852D1002EE6FD /* UBSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UBSceneDelegate.swift; sourceTree = "<group>"; };
+		C0E5483C29BC368C002EE6FD /* UBNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UBNotifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +273,7 @@
 		C001694F282C4E1600523EFF /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				C0E5483B29BC3664002EE6FD /* Notifications */,
 				C01B241029B2D53D0015BFD8 /* Friends */,
 				C04C20F029637F2300936726 /* Constants */,
 				C02F43FD2960CB0000A76EC9 /* amplify-generated */,
@@ -279,6 +286,7 @@
 				C0016998282D8CD200523EFF /* Views */,
 				C0016950282C4E1600523EFF /* usebetterApp.swift */,
 				C0016A09283A08BE00523EFF /* AppDelegate.swift */,
+				C0E5483829B852D1002EE6FD /* UBSceneDelegate.swift */,
 				C001698C282CB23F00523EFF /* ViewRouter.swift */,
 				C0016952282C4E1800523EFF /* Assets.xcassets */,
 			);
@@ -440,6 +448,14 @@
 				C0DDD582295CB10300516EAF /* SignUpWithAppleVIewModel.swift */,
 			);
 			path = Account;
+			sourceTree = "<group>";
+		};
+		C0E5483B29BC3664002EE6FD /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				C0E5483C29BC368C002EE6FD /* UBNotifications.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -633,6 +649,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C021F446294AB385009A5E1C /* Logger.swift in Sources */,
+				C0E5483D29BC368C002EE6FD /* UBNotifications.swift in Sources */,
 				C0016996282CD49D00523EFF /* DashboardHomeView.swift in Sources */,
 				C00169E72836086400523EFF /* FriendsFeedModel.swift in Sources */,
 				C00169EA2838A65600523EFF /* UpdateItemView.swift in Sources */,
@@ -671,6 +688,7 @@
 				C0016A19283AD45300523EFF /* AccountManager.swift in Sources */,
 				C0E4ED372845B664002C29AA /* DashboardEventsView.swift in Sources */,
 				C0016978282C4E1800523EFF /* usebetterApp.swift in Sources */,
+				C0E5483929B852D1002EE6FD /* UBSceneDelegate.swift in Sources */,
 				C00169D7282E203800523EFF /* DashboardMyStuffView.swift in Sources */,
 				C01B241229B2D5790015BFD8 /* FriendsModel.swift in Sources */,
 				C00169DD28317C1400523EFF /* URLParser.swift in Sources */,
@@ -707,7 +725,9 @@
 				C0016A0B283A08BE00523EFF /* AppDelegate.swift in Sources */,
 				C001699F282D921E00523EFF /* DashboardHomeViewModel.swift in Sources */,
 				C0E4ED3B2845D614002C29AA /* ActionItemView.swift in Sources */,
+				C0E5483E29BC368C002EE6FD /* UBNotifications.swift in Sources */,
 				C0016A1A283AD45300523EFF /* AccountManager.swift in Sources */,
+				C0E5483A29B852D1002EE6FD /* UBSceneDelegate.swift in Sources */,
 				C04C20EF29635A5100936726 /* UBNavigationStackView.swift in Sources */,
 				C0E4ED382845B664002C29AA /* DashboardEventsView.swift in Sources */,
 				C0016979282C4E1800523EFF /* usebetterApp.swift in Sources */,

@@ -24,6 +24,7 @@ class FriendsModel: ObservableObject{
             mockData()
         }
         else {
+            registerForNotifications()
             loadFriends()
         }
     }
@@ -146,12 +147,6 @@ class FriendsModel: ObservableObject{
                 logger.log("FriendsModel: getFriendsListFromDB: received friends List \(String(describing: friendsMapInDB)) count = \(friendsMapInDB.count)")
                 //update Local storage with DB storage
                 DispatchQueue.main.async {
-//                    if friendsMapInDB.count == 0 {
-//                        Task {
-//                            await self.getFriendsListFromDB(userId: "pacchij@yahoo.com")
-//                        }
-//                        return
-//                    }
                     let data = Array(friendsMapInDB)
                     data.forEach {
                         let circleName = $0.circleName?[0] ?? "default"
@@ -167,6 +162,19 @@ class FriendsModel: ObservableObject{
             logger.log("FriendsModel: getFriendsListFromDB: failed to query user Info \(error)")
         }
         return [:]
+    }
+    
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(addFriendId),  name: Notification.Name( UBNotificationName.addFriend), object: nil)
+    }
+    
+    @objc private func addFriendId(notification: NSNotification) {
+        guard let friendId = notification.object as? String else {
+            logger.log("[FriendsModel] addFriendId Invalid FriendId")
+            return
+        }
+        logger.log("[FriendsModel] addFriendId \(friendId)")
+        add(friendId: friendId)
     }
     
     public func mockData() {
