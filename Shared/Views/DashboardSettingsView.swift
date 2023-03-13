@@ -12,6 +12,7 @@ import Combine
 struct DashboardSettingsView: View {
     @State private var changedDisplayName = "DisplayName"
     @State private var newFriendId = ""
+    @State private var friendSelection: Bool = true
     @EnvironmentObject var friendsModel: FriendsModel
     private var bag = Set<AnyCancellable>()
     private var preview = false

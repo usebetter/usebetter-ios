@@ -117,6 +117,8 @@
 		C0E5483A29B852D1002EE6FD /* UBSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E5483829B852D1002EE6FD /* UBSceneDelegate.swift */; };
 		C0E5483D29BC368C002EE6FD /* UBNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E5483C29BC368C002EE6FD /* UBNotifications.swift */; };
 		C0E5483E29BC368C002EE6FD /* UBNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E5483C29BC368C002EE6FD /* UBNotifications.swift */; };
+		C0E5484129BD3DD6002EE6FD /* UBTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E5484029BD3DD6002EE6FD /* UBTableModel.swift */; };
+		C0E5484229BD3DD6002EE6FD /* UBTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E5484029BD3DD6002EE6FD /* UBTableModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +204,7 @@
 		C0E4ED3F284C28F3002C29AA /* WebContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContentView.swift; sourceTree = "<group>"; };
 		C0E5483829B852D1002EE6FD /* UBSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UBSceneDelegate.swift; sourceTree = "<group>"; };
 		C0E5483C29BC368C002EE6FD /* UBNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UBNotifications.swift; sourceTree = "<group>"; };
+		C0E5484029BD3DD6002EE6FD /* UBTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UBTableModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,7 +279,6 @@
 				C0E5483B29BC3664002EE6FD /* Notifications */,
 				C01B241029B2D53D0015BFD8 /* Friends */,
 				C04C20F029637F2300936726 /* Constants */,
-				C02F43FD2960CB0000A76EC9 /* amplify-generated */,
 				C0DDD581295CB0CA00516EAF /* Account */,
 				C00169E2283607E300523EFF /* DataModels */,
 				C001699C282D91F400523EFF /* Utils */,
@@ -391,7 +393,6 @@
 			isa = PBXGroup;
 			children = (
 				C00169E32836084400523EFF /* UserFeedModel.swift */,
-				C0DB2FD229A269CC00DFAA9E /* UserInfoModel.swift */,
 				C0E4ED2C28431C42002C29AA /* JSONInterpreter.swift */,
 				C00169E62836086400523EFF /* FriendsFeedModel.swift */,
 				C0E4ED3328458BB2002C29AA /* EventsModel.swift */,
@@ -412,6 +413,8 @@
 			isa = PBXGroup;
 			children = (
 				C01B241129B2D5790015BFD8 /* FriendsModel.swift */,
+				C0DB2FD229A269CC00DFAA9E /* UserInfoModel.swift */,
+				C0E5484029BD3DD6002EE6FD /* UBTableModel.swift */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -427,7 +430,8 @@
 				C02F44002960CB2100A76EC9 /* UBEvent.swift */,
 				C02F43FE2960CB2100A76EC9 /* UBEvent+Schema.swift */,
 			);
-			path = "amplify-generated";
+			name = "amplify-generated";
+			path = "../amplify-generated";
 			sourceTree = "<group>";
 		};
 		C04C20F029637F2300936726 /* Constants */ = {
@@ -441,6 +445,7 @@
 		C0DDD581295CB0CA00516EAF /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				C02F43FD2960CB0000A76EC9 /* amplify-generated */,
 				C0DDD585295CB10300516EAF /* LoginOptionsView.swift */,
 				C0DDD583295CB10300516EAF /* SignUPView.swift */,
 				C02F440429611C8300A76EC9 /* ValidateSignUpView.swift */,
@@ -666,6 +671,7 @@
 				C00169F328396B5B00523EFF /* ContactPicker.swift in Sources */,
 				C00169A1282D92D300523EFF /* UBItem.swift in Sources */,
 				C0DB2FD029A2679900DFAA9E /* UBUser.swift in Sources */,
+				C0E5484129BD3DD6002EE6FD /* UBTableModel.swift in Sources */,
 				C0016A1C2842864A00523EFF /* DashboardSettingsView.swift in Sources */,
 				C04C20EE29635A5100936726 /* UBNavigationStackView.swift in Sources */,
 				C0E4ED2D28431C42002C29AA /* JSONInterpreter.swift in Sources */,
@@ -716,6 +722,7 @@
 				C001697B282C4E1800523EFF /* ContentView.swift in Sources */,
 				C00169F428396B5B00523EFF /* ContactPicker.swift in Sources */,
 				C00169A2282D92D300523EFF /* UBItem.swift in Sources */,
+				C0E5484229BD3DD6002EE6FD /* UBTableModel.swift in Sources */,
 				C0016A1D2842864A00523EFF /* DashboardSettingsView.swift in Sources */,
 				C0E4ED2E28431C42002C29AA /* JSONInterpreter.swift in Sources */,
 				C04C20F329637F3B00936726 /* UBConstants.swift in Sources */,

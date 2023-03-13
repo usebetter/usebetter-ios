@@ -10,22 +10,23 @@ import Amplify
 import Combine
 import Base62
 
-class FriendsModel: ObservableObject{
+class FriendsModel: UBTableModel, ObservableObject{
     @Published public var friendsList: [String: String] = [:]
     public let friendUpdatedEvent = PassthroughSubject<Bool, Never>()
     struct Constants {
-        static let maxFriendsCount = 100
         static let appIdPrefix = "UseBetter://"
     }
     
+    override init() {
+        super.init()
+        registerForNotifications()
+        loadFriends()
+    }
     
-    init(preview: Bool = false) {
+    convenience init(preview: Bool = false) {
+        self.init()
         if preview {
             mockData()
-        }
-        else {
-            registerForNotifications()
-            loadFriends()
         }
     }
     
@@ -64,12 +65,25 @@ class FriendsModel: ObservableObject{
             updateCirlceName(userId: currentUser, friendId: lowerCaseFriendId, circleName: circleName)
             return
         }
-        friendsList[lowerCaseFriendId] = circleName
+        
+        
         Task {
-            //1. Add current user to Friend Id
-            await updateFriendsDB(userId: currentUser, friendId: lowerCaseFriendId, circleName: circleName, create: true)
-            //2. Also Friend id to current user another entry
-            await updateFriendsDB(userId: lowerCaseFriendId, friendId: currentUser, circleName: circleName, create: true)
+            //1. //Check if friend exists in DB
+            
+            guard let frinedUserInfo = await getUserInfo(userId: lowerCaseFriendId) else {
+                logger.error("FriendsModel: Friend \(lowerCaseFriendId) does not exists")
+                friendUpdatedEvent.send(false)
+                return
+            }
+            
+            //2. Add current user to Friend Id
+            let addFriendResult1 = await updateFriendsDB(userId: currentUser, friendId: frinedUserInfo.userId, circleName: circleName, create: true)
+            //3. Also Friend id to current user another entry
+            let addFriendResult2 = await updateFriendsDB(userId: frinedUserInfo.userId, friendId: currentUser, circleName: circleName, create: true)
+            if addFriendResult1 && addFriendResult2 {
+                friendUpdatedEvent.send(true)
+                friendsList[lowerCaseFriendId] = circleName
+            }
         }
     }
     
@@ -85,7 +99,7 @@ class FriendsModel: ObservableObject{
                 Task {
                     //TODO: Test update the DB
                     logger.error("FriendsModel: changeCirlceName updating new circleName in DB")
-                    await updateFriendsDB(userId: userId, friendId: friendId, circleName: circleName, create: false)
+                    _ = await updateFriendsDB(userId: userId, friendId: friendId, circleName: circleName, create: false)
                 }
             }
         }
@@ -102,66 +116,9 @@ class FriendsModel: ObservableObject{
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Task {
-                _ = await self.getFriendsListFromDB(userId: currentUser)
+                self.friendsList = await self.getFriendsListFromDB(userId: currentUser)
             }
         }
-    }
-    
-    private func getAllFriendsMapQuery(userId: String) -> GraphQLRequest<List<UBFriendsMap>> {
-        let todo = UBFriendsMap.keys
-        let predicate = todo.userId == userId
-        let request = GraphQLRequest<UBFriendsMap>.list(UBFriendsMap.self, where: predicate, limit: Constants.maxFriendsCount)
-        return request
-    }
-    
-    private func updateFriendsDB(userId: String, friendId: String, circleName: String, create: Bool) async {
-        do {
-            let result: Result<UBFriendsMap, GraphQLResponseError<UBFriendsMap>>
-            if create {
-                result = try await Amplify.API.mutate(request: .create(UBFriendsMap(userId: userId, friendId: friendId, circleName: [circleName])))
-            }
-            else {
-                result = try await Amplify.API.mutate(request: .update(UBFriendsMap(userId: userId, friendId: friendId, circleName: [circleName])))
-            }
-            switch result {
-            case .success(_):
-                logger.log("FriendsModel: updateFriendsDB: updated successfully")
-                friendUpdatedEvent.send(true)
-            case .failure(let error):
-                logger.error("FriendsModel: updateFriendsDB: failed to update user Info \(error)")
-            }
-        }
-        catch {
-            logger.error("FriendsModel: updateFriendsDB: failed to query user Info \(error)")
-        }
-    }
-    
-    private func getFriendsListFromDB(userId: String) async -> [String: String]  {
-        do {
-
-            let request = getAllFriendsMapQuery(userId: userId)
-            logger.log("FriendsModel: getFriendsListFromDB: request \(String(describing: request))")
-            let getResult = try await Amplify.API.query(request: request)
-            switch getResult {
-            case .success(let friendsMapInDB):
-                logger.log("FriendsModel: getFriendsListFromDB: received friends List \(String(describing: friendsMapInDB)) count = \(friendsMapInDB.count)")
-                //update Local storage with DB storage
-                DispatchQueue.main.async {
-                    let data = Array(friendsMapInDB)
-                    data.forEach {
-                        let circleName = $0.circleName?[0] ?? "default"
-                        logger.log("FriendsModel: getFriendsListFromDB friendId \($0.friendId) circleName \(circleName)")
-                        self.friendsList[$0.friendId] = circleName
-                    }
-                }
-            case .failure(let error):
-                logger.log("FriendsModel: getFriendsListFromDB: failed to get records from table error: \(error)")
-            }
-        }
-        catch {
-            logger.log("FriendsModel: getFriendsListFromDB: failed to query user Info \(error)")
-        }
-        return [:]
     }
     
     private func registerForNotifications() {
@@ -175,6 +132,10 @@ class FriendsModel: ObservableObject{
         }
         logger.log("[FriendsModel] addFriendId \(friendId)")
         add(friendId: friendId)
+    }
+    
+    private func isValidUser(userId: String) -> Bool {
+        return false
     }
     
     public func mockData() {

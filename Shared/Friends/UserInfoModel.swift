@@ -10,13 +10,14 @@ import Amplify
 import Combine
 
 
-class UserInfoModel: ObservableObject {
+class UserInfoModel: UBTableModel, ObservableObject  {
     private var currentUserInfo: UBUser? = nil
     private var bag = Set<AnyCancellable>()
     private var updateOnce = false
     private var updateTimer: Timer? = nil
     
-    public init() {
+    public override init() {
+        super.init()
         registerForEvents()
     }
     
@@ -53,28 +54,17 @@ class UserInfoModel: ObservableObject {
         }
     }
     
-    private func getUBUserQuery(currentUser: String) -> GraphQLRequest<UBUser> {
-        let documentString = "query GetUBUser($userId: String!) {\n  getUBUser(userId: $userId) {\n    userId\n    apnsToken\n    createdAt\n    displayName\n    email\n    fcmToken\n    firstName\n    id\n    lastName\n    updatedAt\n    __typename\n  }\n}"
-        
-        let documentVariables: [String: Any] = ["userId": currentUser]
-        let documentName = "getUBUser"
-        return GraphQLRequest<UBUser>(document: documentString,
-                                  variables: documentVariables,
-                                  responseType: UBUser.self,
-                                  decodePath: documentName)
-    }
     
     private func updateUserInfo() async {
         guard let currentUser = AccountManager.sharedInstance.currentUsername else {
             return
         }
         do {
-            
-            let getResult = try await Amplify.API.query(request: getUBUserQuery(currentUser: currentUser))
+            let getResult = try await Amplify.API.query(request: getUBUserQuery(userId: currentUser))
             switch getResult {
             case .success(let userRecord):
                 logger.log("UserInfoModel: updateUserInfo: updating existing record \(String(describing: userRecord))")
-                await createOrUpdateRecord(create: false)                
+                await createOrUpdateRecord(create: false)
             case .failure(let error):
                 logger.log("UserInfoModel: updateUserInfo: failed to get records from table error: \(error)")
                 await createOrUpdateRecord(create: true)
@@ -82,43 +72,6 @@ class UserInfoModel: ObservableObject {
         }
         catch {
             logger.log("UserInfoModel: loadEventsByReceiver: failed to query events \(error)")
-        }
-    }
-    
-    private func createOrUpdateRecord(create: Bool) async {
-        guard let currentUser = AccountManager.sharedInstance.currentUsername else {
-            return
-        }
-        guard let emailId = AppUserDefaults.shared.emailId else {
-            return
-        }
-        logger.log("UserInfoModel: createOrUpdateRecord: \(create ? "creating" : "updating") record")
-        
-        var updatedUser = UBUser(userId: currentUser, email: emailId)
-        updatedUser.displayName = AppUserDefaults.shared.displayName
-        updatedUser.firstName = AppUserDefaults.shared.firstName
-        updatedUser.lastName = AppUserDefaults.shared.lastName
-        updatedUser.fcmToken = AppUserDefaults.shared.fcmToken
-        updatedUser.apnsToken = AppUserDefaults.shared.apnsToken
-        
-        
-        let result: Result<UBUser, GraphQLResponseError<UBUser>>
-        do {
-            if create {
-                result = try await Amplify.API.mutate(request: .create(updatedUser))
-            }
-            else {
-                result = try await Amplify.API.mutate(request: .update(updatedUser))
-            }
-            switch result {
-            case .success(let dbSucessData):
-                logger.log("UserInfoModel: createOrUpdateRecord success \(String(describing: dbSucessData))")
-            case .failure(let error):
-                logger.log("UserInfoModel: createOrUpdateRecord failed \(error)")
-            }
-        }
-        catch {
-            logger.error("UserInfoModel: createOrUpdateRecord: Exception \(error)")
         }
     }
     
