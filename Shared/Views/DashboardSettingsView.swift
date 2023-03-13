@@ -16,6 +16,9 @@ struct DashboardSettingsView: View {
     @EnvironmentObject var friendsModel: FriendsModel
     private var bag = Set<AnyCancellable>()
     private var preview = false
+    struct Constants {
+        static var shareLabel = "Tap to share my user Id"
+    }
     init(preview: Bool = false) {
         self.preview = preview
     }
@@ -52,9 +55,20 @@ struct DashboardSettingsView: View {
                             }
                             
                             HStack() {
-                                Text("Copy My User Id to send to friends")
-                                Image(systemName: "doc.on.doc.fill")
-                                
+                                if #available(iOS 16.0, *) {
+                                    ShareLink(item: currentUserAddFriendLink) {
+                                        Label(Constants.shareLabel, systemImage:  "square.and.arrow.up")
+                                    }
+                                }
+                                else {
+                                    Text(Constants.shareLabel)
+                                    Button( action: {
+                                        let activityVC = UIActivityViewController(activityItems: [currentUserAddFriendLink as Any], applicationActivities: nil)
+                                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                                    }){
+                                        Image(systemName: "doc.on.doc.fill")
+                                    }
+                                }
                             }
 
                             Spacer()
@@ -142,11 +156,33 @@ struct DashboardSettingsView: View {
         logger.log("DashboardSettingsView: addFriend")
         friendsModel.add(friendId: newFriendId)
     }
+    
+    private var currentUserAddFriendLink: String {
+        var baseurl = "https://usebetter.app/friends/add?Id="
+        guard let currentUserId = AccountManager.sharedInstance.currentUsername else {
+            return baseurl
+        }
+        baseurl += currentUserId
+        return baseurl
+    }
 }
 
 struct DashboardSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         DashboardSettingsView(preview: true)
             .environmentObject(FriendsModel(preview: true))
+    }
+}
+
+public extension UIApplication {
+    func currentUIWindow() -> UIWindow? {
+        let connectedScenes = UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { $0 as? UIWindowScene }
+        
+        let window = connectedScenes.first?
+            .windows
+            .first { $0.isKeyWindow }
+        return window
     }
 }

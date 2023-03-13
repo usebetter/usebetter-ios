@@ -68,18 +68,17 @@ class FriendsModel: UBTableModel, ObservableObject{
         
         
         Task {
-            //1. //Check if friend exists in DB
-            
-            guard let frinedUserInfo = await getUserInfo(userId: lowerCaseFriendId) else {
-                logger.error("FriendsModel: Friend \(lowerCaseFriendId) does not exists")
+            //1. //Check if friend exists in DB or its current user
+            guard let friendUserInfo = await getUserInfo(userId: lowerCaseFriendId), friendUserInfo.userId != currentUser else {
+                logger.error("FriendsModel: Friend \(lowerCaseFriendId) does not exists or its current user")
                 friendUpdatedEvent.send(false)
                 return
             }
             
             //2. Add current user to Friend Id
-            let addFriendResult1 = await updateFriendsDB(userId: currentUser, friendId: frinedUserInfo.userId, circleName: circleName, create: true)
+            let addFriendResult1 = await updateFriendsDB(userId: currentUser, friendId: friendUserInfo.userId, circleName: circleName, create: true)
             //3. Also Friend id to current user another entry
-            let addFriendResult2 = await updateFriendsDB(userId: frinedUserInfo.userId, friendId: currentUser, circleName: circleName, create: true)
+            let addFriendResult2 = await updateFriendsDB(userId: friendUserInfo.userId, friendId: currentUser, circleName: circleName, create: true)
             if addFriendResult1 && addFriendResult2 {
                 friendUpdatedEvent.send(true)
                 friendsList[lowerCaseFriendId] = circleName
